@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 import sys, os, urllib.request
+from wget import download
+
+class downloader:
+    def downloadFile(self, url, location=""):
+        download(url, out = location)
 
 if not os.path.exists('downloads/'):
     print('no downloads folder! creating...')
@@ -15,7 +20,6 @@ if not os.path.exists('repodata.txt'):
 if len(sys.argv) == 1:
     print(" _                         _\n| |_   _ _ __   ___  _ __ | | ____ _\n| | | | | '_ \ / _ \| '_ \| |/ / _` |\n| | |_| | | | | (_) | |_) |   | (_| |\n|_|\__,_|_| |_|\___/| .__/|_|\_\__, |\n                    |_|        |___/\nv0.1 by lunee.")
 
-# luno get
 elif sys.argv[1] == 'get' and len(sys.argv) == 2:
     print('luno get [package_name] // luno get update')
 elif sys.argv[1] == 'get' and len(sys.argv) >= 3:
@@ -24,17 +28,12 @@ elif sys.argv[1] == 'get' and len(sys.argv) >= 3:
         repodata = open('repodata.txt', 'r').read().split('\n')
         if pkg in repodata:
             print('found! downloading...')
-            try:
-                url = repodata[repodata.index(pkg) + 1]
-                filename = url.split('/')[-1]
-                urllib.request.urlretrieve(url, f'downloads/{filename}')
-                print(f'saved as {filename}!')
-            except:
-                print("error! check download url, maybe it's broken.")
+            url = repodata[repodata.index(pkg) + 1]
+            downloader().downloadFile(url, 'downloads/')
+            print('\nsaved!')
         else:
             print('error! package not found!')
 
-# luno repo
 elif sys.argv[1] == 'repo' and len(sys.argv) == 2:
     print('luno repo change/update')
 elif sys.argv[1:3] == ['repo', 'update']:
