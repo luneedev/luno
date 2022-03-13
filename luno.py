@@ -42,7 +42,7 @@ elif sys.argv[1:3] == ['repo', 'update']:
         urllib.request.urlretrieve(open('repourl.txt', 'r').readline(), 'repodata.txt')
         print('success!')
     except:
-        print('error! check repo url and try again.')
+        print('error! check repo url and try again. you can change the repo url with "luno repo change [url]"')
 elif sys.argv[1:3] == ['repo', 'change'] and len(sys.argv) == 4:
     print('\nOld: ' + open('repourl.txt', 'r').readline() + '\nNew: ' + str(sys.argv[3]))
     open('repourl.txt', 'w').write(sys.argv[3])
